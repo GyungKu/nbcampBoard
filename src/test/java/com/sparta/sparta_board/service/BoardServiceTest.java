@@ -81,11 +81,33 @@ class BoardServiceTest {
         BoardRequestDto request = new BoardRequestDto("제목", "1234", "userA", "내용");
         BoardResponseDto response = boardService.createBoard(request);
 
-        // 저장한 게시글 갖고 오기
-        BoardResponseDto findResponse = boardService.getBoard(response.getId());
-
         // 비밀번호가 틀릴 경우
         BoardRequestDto updateRequest = new BoardRequestDto("제목1", "4321", "userB", "내용");
-        assertThatThrownBy(() -> boardService.updateBoard(findResponse.getId(), updateRequest)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> boardService.updateBoard(response.getId(), updateRequest)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 테스트")
+    void test6() {
+        // 게시글 저장
+        BoardRequestDto request = new BoardRequestDto("제목", "1234", "userA", "내용");
+        BoardResponseDto response = boardService.createBoard(request);
+
+        // 게시글 삭제
+        boardService.deleteBoard(response.getId(), "1234");
+
+        // 이미 삭제된 게시글 이므로 조회 시 존재 하지 않는 게시글 처리가 됨
+        assertThatThrownBy(() -> boardService.getBoard(response.getId())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 실패 테스트")
+    void test7() {
+        // 게시글 저장
+        BoardRequestDto request = new BoardRequestDto("제목", "1234", "userA", "내용");
+        BoardResponseDto response = boardService.createBoard(request);
+
+        // 게시글 삭제 비밀번호가 틀릴 때
+        assertThatThrownBy(() -> boardService.deleteBoard(response.getId(), "4321")).isInstanceOf(IllegalArgumentException.class);
     }
 }

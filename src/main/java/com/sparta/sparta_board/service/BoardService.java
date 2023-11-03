@@ -33,9 +33,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto updateBoard(Long id, BoardRequestDto boardRequestDto) {
         Board board = findBoard(id);
-        if (!board.getPassword().equals(boardRequestDto.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
-        }
+        passwordCheck(boardRequestDto.getPassword(), board.getPassword());
         board.update(boardRequestDto);
         return new BoardResponseDto(board);
     }
@@ -44,5 +42,15 @@ public class BoardService {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
     }
 
-//    private Board passwordCheck()
+    public void deleteBoard(Long id, String password) {
+        Board board = findBoard(id);
+        passwordCheck(password, board.getPassword());
+        boardRepository.delete(board);
+    }
+
+    private void passwordCheck(String inputPassword, String password) {
+        if (!inputPassword.equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
+        }
+    }
 }
