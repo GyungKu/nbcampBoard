@@ -3,6 +3,7 @@ package com.sparta.sparta_board.service;
 import com.sparta.sparta_board.entity.Board;
 import com.sparta.sparta_board.entity.BoardRequestDto;
 import com.sparta.sparta_board.entity.BoardResponseDto;
+import com.sparta.sparta_board.exception.PasswordException;
 import com.sparta.sparta_board.repository.BoardRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +84,7 @@ class BoardServiceTest {
 
         // 비밀번호가 틀릴 경우
         BoardRequestDto updateRequest = new BoardRequestDto("제목1", "4321", "userB", "내용");
-        assertThatThrownBy(() -> boardService.updateBoard(response.getId(), updateRequest)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> boardService.updateBoard(response.getId(), updateRequest)).isInstanceOf(PasswordException.class);
     }
 
     @Test
@@ -108,6 +109,6 @@ class BoardServiceTest {
         BoardResponseDto response = boardService.createBoard(request);
 
         // 게시글 삭제 비밀번호가 틀릴 때
-        assertThatThrownBy(() -> boardService.deleteBoard(response.getId(), "4321")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> boardService.deleteBoard(response.getId(), "4321")).isInstanceOf(PasswordException.class);
     }
 }

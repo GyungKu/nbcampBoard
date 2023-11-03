@@ -3,6 +3,7 @@ package com.sparta.sparta_board.service;
 import com.sparta.sparta_board.entity.Board;
 import com.sparta.sparta_board.entity.BoardRequestDto;
 import com.sparta.sparta_board.entity.BoardResponseDto;
+import com.sparta.sparta_board.exception.PasswordException;
 import com.sparta.sparta_board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class BoardService {
 
     private void passwordCheck(String inputPassword, String password) {
         if (!inputPassword.equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
+            throw new PasswordException();
         }
     }
 }
