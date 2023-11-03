@@ -7,35 +7,38 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/api/board")
+    @PostMapping("/board")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto) {
         return boardService.createBoard(boardRequestDto);
     }
 
-    @GetMapping("/api/board/{id}")
+    @GetMapping("/board/{id}")
     public BoardResponseDto getBoard(@PathVariable Long id) {
         return boardService.getBoard(id);
     }
 
-    @GetMapping("/api/boards")
+    @GetMapping("/boards")
     public List<BoardResponseDto> getBoards() {
         return boardService.getBoards();
     }
 
-    @PutMapping("/api/board/{id}")
+    @PutMapping("/board/{id}")
     public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.updateBoard(id, boardRequestDto);
     }
 
-    @DeleteMapping("api/board/{id}")
-    public void deleteBoard(@PathVariable Long id, String password) {
+    @DeleteMapping("/board/{id}")
+    public void deleteBoard(@PathVariable Long id, @RequestBody Map<String, String> passwordMap) {
+        String password = passwordMap.get("password");
         boardService.deleteBoard(id, password);
     }
 
