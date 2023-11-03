@@ -35,4 +35,15 @@ class BoardServiceTest {
         Assertions.assertThat(findBoard.getContent()).isEqualTo(request.getContent());
         Assertions.assertThat(findBoard.getPassword()).isEqualTo(request.getPassword());
     }
+
+    @Test
+    @DisplayName("게시글 조회 테스트")
+    void test2() {
+        BoardRequestDto request = new BoardRequestDto("제목", "1234", "userA", "내용");
+        BoardResponseDto response = boardService.createBoard(request);
+
+        BoardResponseDto findResponse = boardService.getBoard(response.getId());
+
+        Assertions.assertThat(findResponse.getId()).isEqualTo(response.getId());
+    }
 }
