@@ -6,6 +6,7 @@ import com.sparta.sparta_board.entity.BoardResponseDto;
 import com.sparta.sparta_board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,7 +26,23 @@ public class BoardService {
     }
 
     public BoardResponseDto getBoard(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
+        Board board = findBoard(id);
         return new BoardResponseDto(board);
     }
+
+    @Transactional
+    public BoardResponseDto updateBoard(Long id, BoardRequestDto boardRequestDto) {
+        Board board = findBoard(id);
+        if (!board.getPassword().equals(boardRequestDto.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
+        }
+        board.update(boardRequestDto);
+        return new BoardResponseDto(board);
+    }
+
+    private Board findBoard(Long id) {
+        return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
+    }
+
+//    private Board passwordCheck()
 }
