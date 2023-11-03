@@ -2,8 +2,10 @@ package com.sparta.sparta_board.controller;
 
 import com.sparta.sparta_board.entity.BoardRequestDto;
 import com.sparta.sparta_board.entity.BoardResponseDto;
+import com.sparta.sparta_board.exception.PasswordException;
 import com.sparta.sparta_board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,18 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String illegalArgsHandler(IllegalArgumentException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(PasswordException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String passwordHandler(PasswordException e) {
+        return e.getMessage();
+    }
 
     @PostMapping("/board")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto) {
