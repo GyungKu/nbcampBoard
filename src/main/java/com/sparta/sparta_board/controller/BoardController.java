@@ -29,4 +29,9 @@ public class BoardController {
         return boardService.getBoards();
     }
 
+    @PutMapping("/api/board/{id}")
+    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto) {
+        return boardService.updateBoard(id, boardRequestDto);
+    }
+
 }
