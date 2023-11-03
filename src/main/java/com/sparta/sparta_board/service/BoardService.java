@@ -38,14 +38,14 @@ public class BoardService {
         return new BoardResponseDto(board);
     }
 
-    private Board findBoard(Long id) {
-        return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
-    }
-
     public void deleteBoard(Long id, String password) {
         Board board = findBoard(id);
         passwordCheck(password, board.getPassword());
         boardRepository.delete(board);
+    }
+
+    private Board findBoard(Long id) {
+        return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
     }
 
     private void passwordCheck(String inputPassword, String password) {
