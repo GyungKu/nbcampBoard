@@ -1,11 +1,10 @@
 package com.sparta.sparta_board.service;
 
 import com.sparta.sparta_board.entity.Board;
-import com.sparta.sparta_board.entity.BoardRequestDto;
-import com.sparta.sparta_board.entity.BoardResponseDto;
+import com.sparta.sparta_board.dto.BoardRequestDto;
+import com.sparta.sparta_board.dto.BoardResponseDto;
 import com.sparta.sparta_board.exception.PasswordException;
 import com.sparta.sparta_board.repository.BoardRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

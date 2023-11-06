@@ -1,14 +1,13 @@
 package com.sparta.sparta_board.entity;
 
+import com.sparta.sparta_board.dto.BoardRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@Setter
 public class Board extends Timestamped{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
