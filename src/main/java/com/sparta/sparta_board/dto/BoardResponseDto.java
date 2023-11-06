@@ -1,5 +1,6 @@
-package com.sparta.sparta_board.entity;
+package com.sparta.sparta_board.dto;
 
+import com.sparta.sparta_board.entity.Board;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
